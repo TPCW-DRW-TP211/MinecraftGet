@@ -1,0 +1,17 @@
+on:
+  push:
+    tags:
+      - "*release"
+      - "*pre release"
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v7
+        with:
+          python-version: "3.14"
+          activate-environment: "true"
+      -

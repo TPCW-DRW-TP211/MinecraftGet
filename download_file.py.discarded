@@ -1,0 +1,51 @@
+import io
+import typing
+
+
+class meta:
+    url = ""
+    hash = "" or None
+    fileSize = 0
+    fileID = ""
+
+    def __init__(self, url, hash, **kwargs):
+        self.url = url
+        self.hash = hash
+        for key, value in kwargs.items():
+            match key:
+                case "fileSize":
+                    self.fileSize = int(value)
+                case "fileID":
+                    self.fileID = hex(value)
+                case _:
+                    break
+
+
+class file(typing.TypedDict):
+    meta: meta
+    fileBin: io.FileIO
+
+
+class dlActs:
+    tasks_ctx = []
+
+    def add_task(self, url, hash, **kwargs):
+        _, file_id = kwargs.items()["file_id"]
+        ctx: file = {
+            "fileBin": io.FileIO(0),
+            "meta": meta(
+                url=url,
+                hash=hash,
+                kwargs=kwargs
+            )}
+        if file_id is not None or file_id != "":
+            self.tasks_ctx.insert(
+                file_id,
+                ctx
+            )
+            return
+        self.tasks_ctx.append(ctx)
+    def run(self, **kwargs):
+        # 为了可维护性，这里使用一下 psutil 获取当前系统参数。
+
+        ...

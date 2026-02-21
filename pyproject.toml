@@ -1,0 +1,11 @@
+[project]
+name = "mcget"
+version = "0.0.1-alpha"
+dependencies = [
+    "requests >= 2.32.5"
+]
+[build-system]
+requires = [
+    "cython >= 3.2.4",
+    "requests >= 2.32.5"
+]
